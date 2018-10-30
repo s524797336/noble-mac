@@ -51,6 +51,8 @@
     if(p.name.empty()) {
         IF(NSString*, name, [peripheral name]) {
             p.name = [name UTF8String];
+        } else {
+            return;
         }
     }
     IF(NSNumber*, txLevel, [advertisementData objectForKey:CBAdvertisementDataTxPowerLevelKey]) {
@@ -59,6 +61,22 @@
     IF(NSData*, data, [advertisementData objectForKey:CBAdvertisementDataManufacturerDataKey]) {
         const UInt8* bytes = (UInt8 *)[data bytes];
         p.manufacturerData.assign(bytes, bytes+[data length]);
+    }
+    IF(NSDictionary*, dictionary, [advertisementData objectForKey:CBAdvertisementDataServiceDataKey]) {
+        for (CBUUID* key in dictionary) {
+            IF(NSData*, value, dictionary[key]) {
+                auto serviceUuid = [[key UUIDString] UTF8String];
+                Data sData;
+                const UInt8* bytes = (UInt8 *)[value bytes];
+                sData.assign(bytes, bytes+[value length]);
+                p.serviceData.push_back(std::make_pair(serviceUuid, sData));
+            }
+        }
+    }
+    IF(NSArray*, services, [advertisementData objectForKey:CBAdvertisementDataServiceUUIDsKey]) {
+        for (CBUUID* service in services) {
+            p.serviceUuids.push_back([[service UUIDString] UTF8String]);
+        }
     }
 
     int rssi = [RSSI intValue];
