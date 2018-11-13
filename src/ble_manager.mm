@@ -11,9 +11,11 @@
 #include "objc_cpp.h"
 
 @implementation BLEManager
-- (instancetype)init   {
+- (instancetype)init: (const Napi::Value&) receiver with: (const Napi::Function&) callback {
     if (self = [super init]) {
         pendingRead = false;
+        // wrap cb before creating the CentralManager as it may call didUpdateState immediately
+        self->emit.Wrap(receiver, callback);
         self.dispatchQueue = dispatch_queue_create("CBqueue", 0);
         self.centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:self.dispatchQueue];
         self.peripherals = [NSMutableDictionary dictionaryWithCapacity:10];
@@ -26,9 +28,13 @@
     emit.RadioState(state);
 }
 
-- (void)scan: (NSArray<CBUUID *> *)serviceUUIDs allowDuplicates: (BOOL)allowDuplicates {
+- (void)scan: (NSArray<NSString*> *)serviceUUIDs allowDuplicates: (BOOL)allowDuplicates {
+    NSMutableArray* advServicesUuid = [NSMutableArray arrayWithCapacity:[serviceUUIDs count]];
+    [serviceUUIDs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [advServicesUuid addObject:[CBUUID UUIDWithString:obj]];
+    }];
     NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:[NSNumber numberWithBool:allowDuplicates]};
-    [self.centralManager scanForPeripheralsWithServices:serviceUUIDs options:options];
+    [self.centralManager scanForPeripheralsWithServices:advServicesUuid options:options];
     emit.ScanState(true);
 }
 
