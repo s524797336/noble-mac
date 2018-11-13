@@ -1,7 +1,7 @@
 {
   "name": "@s524797336/noble-mac",
   "description": "Noble (Node.js Bluetooth LE) bindings using CoreBluetooth API",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": "gv@timeular.com",
   "license": "MIT",
   "repository": {
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "install": "node install.js",
-    "native_install": "node-pre-gyp install --debug --build-from-source",
+    "native_install": "node-pre-gyp install --fallback-to-build",
     "test": "node --napi-modules ./test/ci_test.js",
     "test:bindings": "node --napi-modules ./test/test_binding.js",
     "xcode": "node-pre-gyp configure --debug -- -f xcode",
