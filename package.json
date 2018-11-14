@@ -1,7 +1,7 @@
 {
   "name": "@s524797336/noble-mac",
   "description": "Noble (Node.js Bluetooth LE) bindings using CoreBluetooth API",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "author": "gv@timeular.com",
   "license": "MIT",
   "repository": {
@@ -16,13 +16,11 @@
     "noble": "^1.9.1",
     "node-addon-api": "^1.1.0",
     "node-pre-gyp": "^0.10.0",
-    "napi-thread-safe-callback": "0.0.6"
+    "napi-thread-safe-callback": "0.0.6",
+    "@s524797336/xpc-connection": "^0.1.5"
   },
   "resolutions": {
-    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
-  },
-  "optionalDependencies": {
-    "xpc-connection": "sandeepmistry/node-xpc-connection#pull/26/head"
+    "xpc-connection": "@s524797336/xpc-connection"
   },
   "scripts": {
     "install": "node install.js",
