@@ -18,12 +18,6 @@
     "node-pre-gyp": "^0.10.0",
     "napi-thread-safe-callback": "0.0.6"
   },
-  "resolutions": {
-    "xpc-connection": "@s524797336/xpc-connection"
-  },
-  "optionalDependencies": {
-    "@s524797336/xpc-connection": "^0.1.5"
-  },
   "scripts": {
     "install": "node install.js",
     "native_install": "node-pre-gyp install --fallback-to-build",
