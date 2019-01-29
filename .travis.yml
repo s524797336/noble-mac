@@ -16,12 +16,16 @@ env:
   - RUNTIME="node" RVERSION="9.11.2" ARCH="ia32"
   - RUNTIME="node" RVERSION="10.11.0" ARCH="x64"
   - RUNTIME="node" RVERSION="10.11.0" ARCH="ia32"
+  - RUNTIME="node" RVERSION="11.6.0" ARCH="x64"
+  - RUNTIME="node" RVERSION="11.6.0" ARCH="ia32"
 
   # electron
   - RUNTIME="electron" RVERSION="2.0.0" ARCH="x64" DIST_URL=https://atom.io/download/atom-shell
   - RUNTIME="electron" RVERSION="2.0.0" ARCH="ia32" DIST_URL=https://atom.io/download/atom-shell
   - RUNTIME="electron" RVERSION="3.0.0" ARCH="x64" DIST_URL=https://atom.io/download/atom-shell
   - RUNTIME="electron" RVERSION="3.0.0" ARCH="ia32" DIST_URL=https://atom.io/download/atom-shell
+  - RUNTIME="electron" RVERSION="4.0.0" ARCH="x64" DIST_URL=https://atom.io/download/atom-shell
+  - RUNTIME="electron" RVERSION="4.0.0" ARCH="ia32" DIST_URL=https://atom.io/download/atom-shell
 
 matrix:
   include:
@@ -40,6 +44,10 @@ matrix:
   - osx_image: xcode7.3
     env: RUNTIME="node" RVERSION="10.11.0" ARCH="ia32"
   - osx_image: xcode7.3
+    env: RUNTIME="node" RVERSION="11.6.0" ARCH="x64"
+  - osx_image: xcode7.3
+    env: RUNTIME="node" RVERSION="11.6.0" ARCH="ia32"
+  - osx_image: xcode7.3
     env: RUNTIME="electron" RVERSION="2.0.0" ARCH="x64"
   - osx_image: xcode7.3
     env: RUNTIME="electron" RVERSION="2.0.0" ARCH="ia32"
@@ -47,10 +55,14 @@ matrix:
     env: RUNTIME="electron" RVERSION="3.0.0" ARCH="x64"
   - osx_image: xcode7.3
     env: RUNTIME="electron" RVERSION="3.0.0" ARCH="ia32"
+  - osx_image: xcode7.3
+    env: RUNTIME="electron" RVERSION="4.0.0" ARCH="x64"
+  - osx_image: xcode7.3
+    env: RUNTIME="electron" RVERSION="4.0.0" ARCH="ia32"
 
 install:
   - export NODE_VERSION=$RVERSION
-  - if [[ "$RUNTIME" == "electron" ]]; then export NODE_VERSION=10.11.0; fi
+  - if [[ "$RUNTIME" == "electron" ]]; then export NODE_VERSION=11.6.0; fi
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
   - npm install
